@@ -5,12 +5,16 @@ env:
   # The name of the Play Store
   playstore_name: TestID
 on:
-  push:
-    branches:
-      - main
-      - release
-      - 'release/**'
-
+  workflow_dispatch:
+    inputs:
+      choice:
+        description: 'Choose which step to run'
+        required: true
+        default: 'step1'
+        type: choice
+        options:
+          - build
+          - build and deploy
 jobs:
   build_upload:
     
@@ -43,10 +47,12 @@ jobs:
 
       # Run Build Project
       - name: Build gradle project
+        if: ${{ github.event.inputs.choice == 'build' }}
         run: ./gradlew build
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
+        if: ${{ github.event.inputs.choice == 'build and deploy' }}
         run: ./gradlew assembleDebug
 
       # Create APK Release
@@ -61,6 +67,7 @@ jobs:
       # Upload Artifact Build
       # Noted For Output [main_project_module]/build/outputs/apk/debug/
       - name: Upload APK Debug - ${{ env.repository_name }}
+        if: ${{ github.event.inputs.choice == 'build and deploy' }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) debug generated
