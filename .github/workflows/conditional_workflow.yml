@@ -1,5 +1,5 @@
 name: Build & deploy on condition
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is running Build & deploy
 env:
   # The name of the main module repository
   main_project_module: app
@@ -89,6 +89,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Check Environment
+        run: pwd
       - name: Upload APK Debug
         if: ${{ github.event.inputs.choice == 'build and deploy' }}
         uses: actions/upload-artifact@v3
