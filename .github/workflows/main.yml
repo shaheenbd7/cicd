@@ -6,10 +6,8 @@ env:
   playstore_name: TestID
 on:
   push:
-    branches:
-      - main
+    branches:  
       - release
-      - 'release/**'
 
 jobs:
   build_upload:
