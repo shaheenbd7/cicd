@@ -47,7 +47,7 @@ jobs:
       # Run Build Project
       - name: Build gradle project
         if: ${{ github.event.inputs.choice == 'build' }}
-        run: ./gradlew build
+        run: ./gradlew build_do_fail
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
