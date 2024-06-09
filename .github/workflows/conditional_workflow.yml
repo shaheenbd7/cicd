@@ -18,7 +18,7 @@ on:
           - build and deploy
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: shan-mac-01
     steps:
       - uses: actions/checkout@v3
 
@@ -86,7 +86,7 @@ jobs:
       #     name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - App bundle(s) AAB release generated
       #     path: ${{ env.main_project_module }}/build/outputs/bundle/release/
   upload_artifact:
-    runs-on: ubuntu-latest
+    runs-on: shan-mac-01
     needs: build
     steps:
       - name: Check Environment
