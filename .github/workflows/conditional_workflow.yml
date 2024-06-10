@@ -30,12 +30,12 @@ jobs:
       - name: Set repository name as env variable
         run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '17'
-          cache: 'gradle'
+      # - name: Set Up JDK
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: 'zulu' # See 'Supported distributions' for available options
+      #     java-version: '17'
+      #     cache: 'gradle'
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -47,7 +47,9 @@ jobs:
       # Run Build Project
       - name: Build gradle project
         if: ${{ github.event.inputs.choice == 'build' }}
-        run: ./gradlew build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
